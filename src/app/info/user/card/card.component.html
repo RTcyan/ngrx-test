@@ -1,0 +1,10 @@
+<app-card *ngIf="user$ | async as user; else empty">
+  <div class="row">
+    <span>{{ user.surname }} {{ user.name }}</span>
+    <span *ngIf="user.gender">Пол: {{ user.gender.value }}</span>
+  </div>
+</app-card>
+
+<ng-template #empty>
+  <app-card><span>Новый пользователь</span></app-card>
+</ng-template>

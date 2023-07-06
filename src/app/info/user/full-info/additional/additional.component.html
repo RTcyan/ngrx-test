@@ -1,0 +1,18 @@
+<h3>Хобби</h3>
+<form [formGroup]="form">
+  <ng-container formArrayName="hobbies">
+    <ng-container *ngFor="let hobbyControl of hobbies.controls; let i = index">
+
+      <tui-input #hobbyControl [formControlName]="i" [focusable]="true" tuiAutoFocus>
+        Название
+        <input tuiTextfield/>
+      </tui-input>
+    
+    </ng-container>
+  </ng-container>
+</form>
+
+<tui-input [formControl]="emptyControl">
+  Добавить новое хобби
+  <input tuiTextfield/>
+</tui-input>
