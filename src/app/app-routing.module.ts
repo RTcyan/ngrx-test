@@ -5,13 +5,19 @@ import { MainLayoutComponent } from './layout/main-layout/main-layout.component'
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'info',
-    pathMatch: 'prefix',
-  },
-  {
-    path: 'info',
     component: MainLayoutComponent,
-  }
+    children: [
+      {
+        path: '',
+        redirectTo: 'info',
+        pathMatch: 'prefix',
+      },
+      {
+        path: 'info',
+        loadChildren: () => import('./info/info.module').then((m) => m.InfoModule),
+      },
+    ],
+  },
 ];
 
 @NgModule({
