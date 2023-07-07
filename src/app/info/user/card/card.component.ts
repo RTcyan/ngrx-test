@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
-import { FormService } from '../services/form.service';
-import { Observable, of } from 'rxjs';
-import { User } from '../models/user';
+import { Store } from '@ngrx/store';
+import { UserSelectors } from '../../state';
 
 @Component({
   selector: 'app-user-card',
@@ -9,11 +8,7 @@ import { User } from '../models/user';
   styleUrls: ['./card.component.scss']
 })
 export class CardComponent {
-  constructor(private formService: FormService) { }
+  public user$ = this.store.select(UserSelectors.userSelector);
 
-  public user$: Observable<User> = of();
-
-  ngOnInit(): void {
-  }
-
+  public constructor(private store: Store) {}
 }

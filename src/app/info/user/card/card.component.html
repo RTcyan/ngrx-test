@@ -1,7 +1,10 @@
 <app-card *ngIf="user$ | async as user; else empty">
-  <div class="row">
+  <div class="main-info">
     <span>{{ user.surname }} {{ user.name }}</span>
     <span *ngIf="user.gender">Пол: {{ user.gender.value }}</span>
+  </div>
+  <div class="hobbies" *ngIf="user.hobbies">
+    <span>Список хобби: {{ user.hobbies.join(', ') }}</span>
   </div>
 </app-card>
 
