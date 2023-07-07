@@ -4,22 +4,34 @@ import { UserModule } from './user/user.module';
 import { InfoComponent } from './info.component';
 import { Route, RouterModule } from '@angular/router';
 import { FullInfoComponent } from './user/full-info/full-info.component';
-import { FormService } from './user/services/form.service';
+import { StoreModule } from '@ngrx/store';
+import { infoFeatureKey } from './state';
+import { infoReducer } from './state/state';
+import { EffectsModule } from '@ngrx/effects';
+import { InfoEffects } from './effects/info.effects';
+import { InfoApiEffects } from './effects/info-api.effects';
+import { InfoResolver } from './info.resolver';
 
 const routes: Route[] = [
   {
     path: '',
-    redirectTo: 'all',
-    pathMatch: 'prefix',
+    resolve: [InfoResolver],
+    children: [
+      {
+        path: '',
+        redirectTo: 'all',
+        pathMatch: 'prefix',
+      },
+      {
+        path: 'all',
+        component: InfoComponent,
+      },
+      {
+        path: 'user',
+        component: FullInfoComponent,
+      }
+    ],
   },
-  {
-    path: 'all',
-    component: InfoComponent,
-  },
-  {
-    path: 'user',
-    component: FullInfoComponent,
-  }
 ];
 
 
@@ -27,11 +39,16 @@ const routes: Route[] = [
   declarations: [
     InfoComponent,
   ],
-  providers: [FormService],
+  providers: [
+    InfoEffects,
+    InfoResolver,
+  ],
   imports: [
     CommonModule,
     UserModule,
     RouterModule.forChild(routes),
+    StoreModule.forFeature(infoFeatureKey, infoReducer),
+    EffectsModule.forFeature([InfoEffects, InfoApiEffects]),
   ],
 })
 export class InfoModule { }
